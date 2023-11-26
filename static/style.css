@@ -1,0 +1,53 @@
+/* static/style.css */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+h1 {
+    text-align: center;
+    color: #007bff; /* Blue color */
+    font-size: 2.5em; /* Adjust the font size as needed */
+    margin-bottom: 20px; /* Add some spacing below the heading */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle text shadow */
+}
+
+/* static/style.css */
+#result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#originalImage,
+#sketchImage {
+    width: 48%; /* Adjust the width as needed */
+    height: auto;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Add some spacing between the images */
+#originalImage {
+    margin-right: 10px;
+}
+
+#sketchImage {
+    margin-left: 10px;
+}

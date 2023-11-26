@@ -1,0 +1,95 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pencil Sketch App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Pencil Sketch App</h1>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            
+            <li><a href="{{ url_for('pencil_sketch') }}">Pencil Sketch App</a></li>
+        </ul>
+    </nav>
+    <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+        <label class="button" for="fileInput">Choose a File</label>
+        <input type="file" id="fileInput" name="file" accept="image/*" onchange="displayOriginalImage(this)" style="display: none;" required>
+        <label for="blur">Blur:</label>
+        <input type="range" id="blur" name="blur" min="0" max="10" value="0">
+        <label for="threshold">Threshold:</label>
+        <input type="range" id="threshold" name="threshold" min="0" max="255" value="200">
+        <button type="button" class="button" onclick="uploadAndProcess()">Upload and Process</button>
+    </form>
+    <div id="result">
+        <!-- Displayed image with reduced width (initially set to an empty string) -->
+        <img id="originalImage" src="" style="display: none; width: 45%; height: 400px; border: none; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-right: 5px;">
+        <!-- Displayed pencil sketch image (initially hidden) -->
+        <img id="sketchImage" src="" style="display: none; width: 45%; height: 400px; border: none; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-left: 5px;">
+    </div>
+    <!-- Download button for the pencil sketch (initially hidden) below the images -->
+    <button id="downloadButton" type="button" class="button" onclick="downloadSketch()" style="display: none; margin-top: 10px;">Download Pencil Sketch</button>
+    <script>
+        function displayOriginalImage(input) {
+            var originalImage = document.getElementById('originalImage');
+            var sketchImage = document.getElementById('sketchImage');
+
+            var file = input.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    // Display the original image
+                    originalImage.src = e.target.result;
+                    // Show the original image
+                    originalImage.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // If no file is selected, hide the original image
+                originalImage.style.display = 'none';
+            }
+
+            // Hide the pencil sketch image and download button
+            sketchImage.style.display = 'none';
+            document.getElementById('downloadButton').style.display = 'none';
+        }
+
+        function uploadAndProcess() {
+            var formData = new FormData(document.getElementById('uploadForm'));
+            var blurValue = document.getElementById('blur').value;
+            var thresholdValue = document.getElementById('threshold').value;
+
+            formData.append('blur', blurValue);
+            formData.append('threshold', thresholdValue);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/upload', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var sketchImage = document.getElementById('sketchImage');
+                    sketchImage.src = 'data:image/png;base64,' + JSON.parse(xhr.responseText)['image'];
+
+                    // Show the pencil sketch image and download button
+                    sketchImage.style.display = 'block';
+                    document.getElementById('downloadButton').style.display = 'block';
+                }
+            };
+            xhr.send(formData);
+        }
+
+        function downloadSketch() {
+            var sketchImage = document.getElementById('sketchImage');
+            var downloadLink = document.createElement('a');
+            downloadLink.href = sketchImage.src;
+            downloadLink.download = 'pencil_sketch.png';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+    </script>
+</body>
+</html>
