@@ -19,6 +19,10 @@ def index():
 def pencil_sketch():
     return render_template('pencil_sketch.html')
 
+@app.route('/photo_editor')
+def photo_editor():
+    return render_template('photo_editor.html')
+
 @app.route('/upload', methods=['POST'])
 def upload():
     if 'file' not in request.files:
