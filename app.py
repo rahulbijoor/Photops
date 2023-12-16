@@ -64,6 +64,39 @@ def process_image(file, blur=5, threshold=128):
 
     return img_str
 
+@app.route('/uploadcrop', methods=['POST'])
+def uploadcrop():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'})
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'})
+
+    if file:
+        x = int(request.form.get('x', 0))
+        y = int(request.form.get('y', 0))
+        w = int(request.form.get('w', 0))
+        h = int(request.form.get('h', 0))
+
+        img_str = crop_image(file, x, y, w, h)
+
+        return jsonify({'image': img_str})
+
+def crop_image(file, x, y, w, h):
+    image_stream = file.read()
+    nparr = np.frombuffer(image_stream, np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+    # Crop the image
+    cropped_img = img[y:y + h, x:x + w]
+
+    # Convert image to base64
+    _, buffer = cv2.imencode('.png', cropped_img)
+    img_str = base64.b64encode(buffer).decode('utf-8')
+
+    return img_str
 
 if __name__ == '__main__':
     app.run(debug=True)
