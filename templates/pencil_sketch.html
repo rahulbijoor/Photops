@@ -28,12 +28,12 @@
     
     <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
         <label class="button" for="fileInput">Choose a File</label>
-        <input type="file" id="fileInput" name="file" accept="image/*" onchange="displayOriginalImage(this)" style="display: none;" required>
-        <label for="blur">Blur:</label>
-        <input type="range" id="blur" name="blur" min="0" max="10" value="0">
-        <label for="threshold">Threshold:</label>
-        <input type="range" id="threshold" name="threshold" min="0" max="255" value="200">
-        <button type="button" class="button" onclick="uploadAndProcess()">Upload and Process</button>
+        <input type="file" id="fileInput" name="file" accept="image/*" onchange="displayOriginalImage(this)" style="display: none; margin: 5px;" required>
+        <label for="blur"style="margin: 5px;">Blur:</label>
+        <input type="range" id="blur" name="blur" min="0" max="10" value="0"style="margin: 5px;">
+        <label for="threshold" style="margin: 5px;">Threshold:</label>
+        <input type="range" id="threshold" name="threshold" min="0" max="255" value="200" style="margin: 5px;">
+        <button type="button" class="button" onclick="uploadAndProcess()" style="margin: 5px;">Upload and Process</button>
     </form>
     <div id="result">
         <!-- Displayed image with reduced width (initially set to an empty string) -->
