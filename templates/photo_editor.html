@@ -50,40 +50,7 @@
       <img id="croppedImage" src="" alt="Cropped Image">
   
       <script>
-        /*document.getElementById('fileInput').addEventListener('change', function (event) {
-            const fileInput = event.target;
-            const initialImage = document.getElementById('initialImage');
-            const croppedImage = document.getElementById('croppedImage');
-            const uploadForm = document.getElementById('uploadForm');
-    
-            if (fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-    
-                reader.onload = function (e) {
-                    initialImage.src = e.target.result;
-                    croppedImage.src = ''; // Clear the cropped image when a new file is selected
-                };
-    
-                reader.readAsDataURL(fileInput.files[0]);
-            }
-        });
-    
-        document.getElementById('uploadForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-    
-            const formData = new FormData(this);
-    
-            fetch('/uploadcrop', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.json())
-            .then(data => {
-                const croppedImage = document.getElementById('croppedImage');
-                croppedImage.src = 'data:image/png;base64,' + data.image;
-            })
-            .catch(error => console.error('Error:', error));
-        });*/
+       
         function displayInitialImage(fileInput) {
         const initialImage = document.getElementById('initialImage');
         const croppedImage = document.getElementById('croppedImage');
