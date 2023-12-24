@@ -1,0 +1,6 @@
+# railway.yaml
+services:
+  - name: web
+    port: 8080
+    command: python app.py
+    language: python
