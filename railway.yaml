@@ -2,5 +2,5 @@
 services:
   - name: web
     port: 8080
-    command: python app.py
+    command: gunicorn -w 4 -b 0.0.0.0:8080 app:app
     language: python
