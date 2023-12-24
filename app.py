@@ -99,4 +99,4 @@ def crop_image(file, x, y, w, h):
     return img_str
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
