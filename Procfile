@@ -1,1 +1,1 @@
-web: gunicorn Photops:app
+python app.py
